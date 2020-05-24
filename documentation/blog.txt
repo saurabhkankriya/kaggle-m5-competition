@@ -1,0 +1,25 @@
+problem statement: we are not only forecasting how many unit we can sell for a product in a specific store but also going to predict for the agg series at store level, department level,etc. There's a whole hierarchy illustrted here: [digramjjj]
+
+description of the dataset
+
+naive forecasts
+
+eda
+
+ml models
+
+feature engineering
+
+data preprocessing and wranglings
+
+submission format
+
+evaluation metric: 
+This is a custom evaluation metric, not available in standard libraries. We manually need to code this in order to evaluate our model locally. If use any other metric, the model would give different scores which would be actually different than the one kaggle submission algo expects. 
+the weight calculated will be multiplied 
+forecast for each series is given by rmsse based on the given equation. then they are weighted on the total dollar sales of the last 28 days of the training set. Given all the series in level 12, we just need to aggregate and divide to get the weight for the higher level. example: if you want to calculate weight of the series total sales of all products, aggregated for the state of California (which is in level 2) we need to add up dollar sales of all items in CA divided by the sum of total sales of all items in CA, TX and WI and then divided by 12 which is the total number of levels
+understanding rmse, mean absolute scaled error and root mean squarred scaled error. watch video 2 
+
+to do:
+add no. of state, categroeies, products, prod department, stores [diagram with numbers]
+describe in simple english what the aggreagation level unit sales mean

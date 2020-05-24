@@ -1,0 +1,33 @@
+1. Being a forecasting competition, why traditional methods such as arima, sarimax not used by other kagglers in their notebooks?
+I have seen notebooks using arima and its variations, for example this one: https://www.kaggle.com/tpmeli/visual-guide-3-m5-baselines-eda-sarima. Some interesting variations specific for this problem are also implemented by the hosts as a benchmark (I believe those are the scores with a little map pointer icon in the leaderboard). For example ARIMA_td (currently holding a score of 0.78836) and ARIMA_bu, they explain these towards the end of the guidellines pdf.
+
+
+2. what is the deal with the submission format? i dont quite understand it
+each row is identified by the 'id' column, where the first half is appended by _validation and second half by _evaluation. The first half is asking for forecast for days 1914 to 1941 (yeah it's not very clear because their column names are F1 to F28 but you can interpret it as F1914 to F1941), and the second half we want to forecast for days 1942 to 1969.
+
+3. why people are still using rmse as the error function when there is already wrmsse?
+I'm not sure if anyone had written a function that integrates wrmsse into the error function when they train a model, but I imagine it would take some time. I haven't worked too much with writing custom loss functions for existing libraries but I have a feeling it's hard to write this one just because it need so many parameters. RMSE on the other hand is supported by the popular ML model libaries and from the discussions optimizing for RMSE seems to also give good WRMSSE.
+
+4. what should be format of the dataframe that i can use to fit ml algorithms?
+I read this notebook a while back: https://www.kaggle.com/beezus666/end-to-end-data-wrangling. Basicallly each (id, day) combination needs to have it's own row with features describing it.
+
+5. what should be the validation strategy?
+To validate performance locally without submitting something every time, you can pretend as if days 1886 to 1913 (which are the last 28 days given to us in the training set) are what you are trying to predict for, make predictions and evaluate your method performances on these days. Once you find one that's good use the same method to predict on days 1913 to 1969
+
+
+
+I've mostly been reading the notebooks with public scores. Haven't really delve too deep into one specific notebook, but I find this one pretty cool: https://www.kaggle.com/kneroma/m5-first-public-notebook-under-0-50
+
+One of the problems I've been having is that if you want this in a typical time series format for ML, where each day is a datapoint with some features, there's going to be way to many data points around (1900 x 30,000). There are functions in the Notebooks kernel that help reduce the size of the dataframe so we don't run out of the 16 gigs of RAM but if we want to add more features or build a large model the memory's still going to give up (also takes way too long to run anything). But this is cool because it managed to make that transformation while the run time is relatively fast by cutting some days in the front (like we can probably ignore the impact of history too far ahead).
+
+I believe the score of this notebook for now is in the top 200 (bronze). To be honest I'm still learning about the Kaggle community, so I can only quote something I remember from a pro Kaggler, that he got good rankings by following up with the best scored public notebooks, see what the author did there and incorporate that with his own ideas.
+
+If you go to Notebooks and sort by score I think right now there's one that does better but it's not an approach I'm familiar with. There are also scores around 0.5 from other Kagglers that may provide some insights if your pipeline can integrate with that.
+
+
+
+
+
+
+
+
